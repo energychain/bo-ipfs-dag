@@ -1,6 +1,6 @@
 {
   "name": "bo-ipfs-dag",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Provides Energy Blockchain Transaction DAG as service for STROMDAO Business Object",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/energychain/bo-ipfs-dag#readme",
   "dependencies": {
     "ipfs": "^0.26.0",
+    "ipfs-pubsub-room": "^0.3.0",
     "js-ipfs": "0.0.301",
     "node-persist": "^2.1.0",
     "stromdao-businessobject": "^0.4.73"

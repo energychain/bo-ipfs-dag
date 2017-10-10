@@ -15,49 +15,20 @@ const ipfs = new IPFS({
   }
 })
 
-const receiveMsg = (msg) => {
-	
+const receiveMsg = (msg) => {	
 	var req=msg.data.toString();
-	console.log(msg);
+	console.log("FROM",msg.from);
 	if(req.length==66) {
 		var storage = require("node-persist");		
 		storage.initSync();	
-		var res=new Buffer(JSON.stringify(storage.getItemSync(req)));		
+		var res=storage.getItemSync(req);		
 		if(typeof res!="undefined") {
-				ipfs.pubsub.publish(msg.topicCIDs[0], res, (err) => {
+				ipfs.pubsub.publish(msg.topicCIDs[0], new Buffer(JSON.stringify(res)), (err) => {
 						console.log("SND",msg.topicCIDs[0],res,err);			
 				})
 		}
-	}	
-}
-
-function publish() {
-	
-	var storage = require("node-persist");
-	var fs = require("fs");
-	storage.initSync();
-	values=storage.keys();
-	var tmp = {};
-	ext_ids=[];
-	for (var k in values){
-		if (values.hasOwnProperty(k)) {			
-			if(values[k].length==66) {				
-				tmp[""+values[k]]=storage.getItemSync(""+values[k]);	
-				console.log(values[k]);
-			}
-			
-			if(values[k].substr(0,4)=="ext:") {
-				ext_ids.push(values[k].substr(4));
-			}
-		}
-	}	
-	if(ext_ids.length>0) {
-		for(var i=0;i<ext_ids.length;i++) {
-			var node = new StromDAOBO.Node({external_id:ext_ids[i],testMode:true,abilocation:"https://cdn.rawgit.com/energychain/StromDAO-BusinessObject/master/smart_contracts/"});	  			
-			ipfs.pubsub.subscribe(ext_ids[i], receiveMsg);
-			ipfs.pubsub.subscribe(node.wallet.address, receiveMsg);
-			console.log("Providing",node.wallet.address);
-		}
+	}	 else {
+		console.log(req);	
 	}
 }
 
@@ -67,10 +38,11 @@ function publish() {
 ipfs.on('ready', () => {
   // Your node is now ready to use \o/
 	
-	publish();
-	
-	ipfs.swarm.connect("/ip4/108.61.210.201/tcp/4001");
-	ipfs.swarm.connect("/ip4/45.32.155.49/tcp/4001");
+	ipfs.swarm.connect("/ip4/108.61.210.201/tcp/4002/ipfs/QmPSrr2c4bWCZ7R6N2tGR8Pj3CK7uWVtANtEZSb8Tptfsv");
+	ipfs.pubsub.subscribe("stromdao-query", receiveMsg);
+	setInterval(function() {	
+	ipfs.pubsub.publish("stromdao-query",new Buffer("0x9d3544a49d0940a7923b7c109165d246e62f20f7d628edf3e3cb0e1184121d06"),(err) => { console.log("SEND"); });
+	},5000);
 	console.log("Node Ready");
 })
 
