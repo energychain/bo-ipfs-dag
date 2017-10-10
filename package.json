@@ -1,0 +1,32 @@
+{
+  "name": "bo-ipfs-dag",
+  "version": "0.0.1",
+  "description": "Provides Energy Blockchain Transaction DAG as service for STROMDAO Business Object",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energychain/bo-ipfs-dag.git"
+  },
+  "keywords": [
+    "stromdao",
+    "businessobject",
+    "energy",
+    "blockchain",
+    "ipfs"
+  ],
+  "author": "Thorsten Zoerner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/energychain/bo-ipfs-dag/issues"
+  },
+  "homepage": "https://github.com/energychain/bo-ipfs-dag#readme",
+  "dependencies": {
+    "ipfs": "^0.26.0",
+    "js-ipfs": "0.0.301",
+    "node-persist": "^2.1.0",
+    "stromdao-businessobject": "^0.4.73"
+  }
+}
