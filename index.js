@@ -22,8 +22,7 @@ const receiveMsg = (msg) => {
 	if(req.length==66) {
 		var storage = require("node-persist");		
 		storage.initSync();	
-		var res=new Buffer(JSON.stringify(storage.getItemSync(req)));
-		console.log("PREP",msg.topicCIDs[0]);
+		var res=new Buffer(JSON.stringify(storage.getItemSync(req)));		
 		if(typeof res!="undefined") {
 				ipfs.pubsub.publish(msg.topicCIDs[0], res, (err) => {
 						console.log("SND",msg.topicCIDs[0],res,err);			
@@ -57,15 +56,9 @@ function publish() {
 			var node = new StromDAOBO.Node({external_id:ext_ids[i],testMode:true,abilocation:"https://cdn.rawgit.com/energychain/StromDAO-BusinessObject/master/smart_contracts/"});	  			
 			ipfs.pubsub.subscribe(ext_ids[i], receiveMsg);
 			ipfs.pubsub.subscribe(node.wallet.address, receiveMsg);
+			console.log("Providing",node.wallet.address);
 		}
 	}
-	/*
-	setInterval(()=>{
-		ipfs.pubsub.publish(ext_ids[0], new Buffer("x"), (err) => {
-			console.log("SND",err);			
-		})		
-	},5000);	
-	*/
 }
 
 
