@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const IPFS = require('ipfs')
 var StromDAOBO = require("stromdao-businessobject"); 
 const ipfs = new IPFS({
