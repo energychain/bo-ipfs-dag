@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/energychain/bo-ipfs-dag#readme",
   "dependencies": {
-    "ipfs": "^0.26.0",    
+    "ipfs": "^0.65.0",    
     "js-ipfs": "0.0.301",
     "node-persist": "^2.1.0"    
   }
